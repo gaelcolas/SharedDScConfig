@@ -23,10 +23,12 @@ The repository will hence need some project files on top of the files required f
 
 Adopting the 2 layers structure like so:
 ```
-- ConfigurationName
-    - ConfigurationName
++-- ConfigurationName\
+    +-- ConfigurationName\
 ```
 Allows to place Project files like build, CI configs and so on at the top level, ad everything under the second level are required files that will be uploaded to the PSGallery.
+
+![example](.\media\FileTree.png)
 
 Within that second layer, the Configuration looks like a standard module with some specificities, the benefits are multiple:
 - Familiar module layout
