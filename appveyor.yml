@@ -1,0 +1,11 @@
+
+os: WMF 5
+
+#disable MSBuild
+build: off
+
+before_build:
+  - ps: . .\.init.ps1
+  
+build_script:
+  - ps: invoke-build
