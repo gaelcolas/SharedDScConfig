@@ -11,6 +11,7 @@ provisioner:
       reboot_if_needed: true
     configuration_script_folder: SharedDscConfig/examples
     configuration_script: Default.ps1
+    configuration_data_variable: ConfigurationData
 
 verifier:
   name: pester
@@ -30,4 +31,8 @@ platforms:
 
 suites:
   - name: Default
+    provisioner:
+      configuration_script: Default.ps1
   - name: OtherTestSuite
+    provisioner:
+        configuration_script: OtherTestSuite.ps1

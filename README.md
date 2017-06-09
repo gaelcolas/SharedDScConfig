@@ -7,10 +7,10 @@ This project is intended to suggest a new structure for sharing DSC Configuratio
 The intent is to have a more familiar structure to standard PowerShell modules. Not only this would help user adoption by
 reducing the bar of entry, it would allow Build tools, tasks and scripts to be more standardized and re-usable.
 
-- Allow direct re-use in Production (no copy-paste/modification of DSC Config or data)()
+- Allow direct re-use in Production (no copy-paste/modification of DSC Config or data)
 - Declare Dependencies in Module Manifest for Pulling requirements from gallery
 - Reduce bar of entry with familiar scaffolding
-- Embed test/default Configuration Data
+- Embed default Configuration Data
 - Be CI/CD tool independant
 - Support test-kitchen model (i.e. module injection, Test Suite)
 - De-Clutter module once published to Gallery (i.e. Removing .Build files)
@@ -117,3 +117,11 @@ In this example, I'm showing (although currently empty) what I usually do:
 
 
 ## Configuration Module Folder
+<div style="align:right"><img src ="./media/SharedConfigFolder.png" / align='right'>
+
+Very similar to a PowerShell Module folder, the Shared configuration re-use the same principles and techniques.
+
+The re-usable configuration itself is declared in the psm1, the metadata and dependencies in the psd1 to leverage all the goodies of module management, then we have some assets ordered in folders:
+- ConfigurationData: the default/example configuration data, organised in test suite/scenarios
+- Validation: the pester tests used to validate the configuration, per test suite/scenario
+- the examples of re-using that shared configuration, per test suite/scenario
