@@ -121,7 +121,7 @@ In this example, I'm showing (although currently empty) what I usually do:
 
 Very similar to a PowerShell Module folder, the Shared configuration re-use the same principles and techniques.
 
-The re-usable configuration itself is declared in the psm1, the metadata and dependencies in the psd1 to leverage all the goodies of module management, then we have some assets ordered in folders:
+The re-usable configuration itself is declared in the ps1, the metadata and dependencies in the psd1 to leverage all the goodies of module management, then we have some assets ordered in folders:
 - ConfigurationData: the default/example configuration data, organised in test suite/scenarios
 - Validation: the pester tests used to validate the configuration, per test suite/scenario
 - the examples of re-using that shared configuration, per test suite/scenario
