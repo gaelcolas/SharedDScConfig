@@ -7,7 +7,7 @@
                 SharedDscConfig = @{
                     Ensure = 'present'
                     DestinationPath = 'C:\test.txt'
-                    Contents = 'This is just a test file.'
+                    Contents = 'another file.'
                 }
             }
         }
