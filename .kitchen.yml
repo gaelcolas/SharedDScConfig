@@ -30,7 +30,7 @@ platforms:
       name: winrm
 
 suites:
-  - name: Default
+  - name: SharedDscConfig
     provisioner:
       configuration_script: Default.ps1
   - name: OtherTestSuite

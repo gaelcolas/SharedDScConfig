@@ -1,1 +1,4 @@
-DscBuildOutput/
+DscBuildOutput/*
+modules/*
+
+!**/README.md
