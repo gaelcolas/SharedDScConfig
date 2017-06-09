@@ -1,9 +1,11 @@
 Configuration SharedDscConfig {
     Import-DSCresource -ModuleName PSDesiredStateConfiguration
-
-    node $AllNodes.Where{'SharedDscConfig' -in $_.Role}.NodeName {
+    Write-host (DscProperty $Node 'Roles\SharedDscConfig\Ensure')
+    node $AllNodes.Where{$_.MemberOfRoles -contains 'SharedDscConfig'}.NodeName {
         File TestFile {
-            Ensure = DscProperty 'Role\SharedDscConfig\Ensure'
+            Ensure          = DscProperty $Node 'Roles\SharedDscConfig\Ensure'
+            DestinationPath = DscProperty $Node 'Roles\SharedDscConfig\DestinationPath'
+            Contents        = DscProperty $Node 'Roles\SharedDscConfig\Contents'
         }
     }
 }
