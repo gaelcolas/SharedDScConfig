@@ -28,5 +28,3 @@ Configuration OtherTestSuite {
 if (!$Env:TEST_KITCHEN) {
     OtherTestSuite -ConfigurationData $ConfigurationData -instanceName
 }
-
-

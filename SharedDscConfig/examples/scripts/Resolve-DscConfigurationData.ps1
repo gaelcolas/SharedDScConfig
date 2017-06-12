@@ -24,4 +24,3 @@ function Resolve-DscConfigurationData {
 }
 Set-Alias -Name ConfigData -value Resolve-DscConfigurationData
 Set-Alias -Name DscProperty -value Resolve-DscConfigurationData
-Set-Alias -Name DscProp -value Resolve-DscConfigurationData
