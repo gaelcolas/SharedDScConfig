@@ -15,6 +15,7 @@ Param (
 Process {
     if ((Get-PSCallStack)[1].InvocationInfo.MyCommand.Name -ne 'Invoke-Build.ps1') {
         Write-Verbose "Returning control to Invoke-Build"
+        ipmo Invoke-Build -force
         Invoke-Build
         return
     }
@@ -42,6 +43,7 @@ Process {
 
 
 begin {
+    $VerbosePreference = 'Continue'
     function Resolve-Dependency {
 
         if (!(Get-PackageProvider -Name NuGet -ForceBootstrap)) {
