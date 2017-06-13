@@ -15,7 +15,7 @@ Param (
 Process {
     if ((Get-PSCallStack)[1].InvocationInfo.MyCommand.Name -ne 'Invoke-Build.ps1') {
         Write-Verbose "Returning control to Invoke-Build"
-        ipmo Invoke-Build -force
+        Import-Module InvokeBuild -force
         Invoke-Build
         return
     }
