@@ -6,8 +6,8 @@
     PSDependOptions = @{
         AddToPath = $True
         Parameters = @{
-            Force = $True
-            Import = $True
+            #Force = $True
+            #Import = $True
         }
     }
 
@@ -16,4 +16,5 @@
     PSScriptAnalyzer = 'latest'
     PlatyPS = 'latest'
     psdeploy = 'latest'
+    'gaelcolas/DscBuildHelpers' = 'master'
 }
