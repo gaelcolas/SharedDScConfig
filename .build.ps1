@@ -36,14 +36,25 @@ Process {
     }
 
     task test {}
+
+
+
 }
-
-
-
 
 
 begin {
     function Resolve-Dependency {
+
+        if (!(Get-PackageProvider -Name NuGet -ForceBootstrap)) {
+            $providerBootstrapParams = @{
+                Name = 'nuget'
+                force = $true
+                ForceBootstrap = $true
+            }
+            if ($GalleryProxy) { $providerBootstrapParams.Add('Proxy',$GalleryProxy) }
+            $null = Install-PackageProvider @providerBootstrapParams
+            Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+        }
 
         if (!(Get-Module -Listavailable PSDepend)) {
             Write-verbose "BootStrapping PSDepend"
@@ -72,4 +83,3 @@ begin {
         Write-Verbose "Project Bootstrapped, returning to Invoke-Build"
     }
 }
-

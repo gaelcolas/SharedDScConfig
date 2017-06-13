@@ -11,6 +11,7 @@
         }
     }
 
+    invokeBuild = 'latest'
     buildhelpers = 'latest'
     pester = 'latest'
     PSScriptAnalyzer = 'latest'
