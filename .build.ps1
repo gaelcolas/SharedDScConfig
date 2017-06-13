@@ -13,14 +13,13 @@ Param (
 )
 
 Process {
+    Resolve-Dependency
+
     if ((Get-PSCallStack)[1].InvocationInfo.MyCommand.Name -ne 'Invoke-Build.ps1') {
         Write-Verbose "Returning control to Invoke-Build"
-        Import-Module InvokeBuild -force
         Invoke-Build
         return
     }
-
-    Resolve-Dependency
 
     Get-ChildItem -Path "$PSScriptRoot/.build/" -Recurse -Include *.ps1 -Verbose |
         Foreach-Object {
