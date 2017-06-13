@@ -14,7 +14,7 @@ Using Geoffrey Moore's value proposition model:
 >
 >Who __need to deploy systems or services quickly__
 >
->Our __configuration sharing guidelines__ is __a re-usable build system for DSC configurations__
+>Our __configuration sharing guidelines__ is __a re-usable build process for DSC configurations__
 >
 >That __transforms Configuration into re-usable and composable DSC Composite Resources__
 
