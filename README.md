@@ -1,4 +1,5 @@
 # Shared Dsc Configurations
+[![Build status](https://ci.appveyor.com/api/projects/status/63pvwjs2waifgty8?svg=true)](https://ci.appveyor.com/project/gaelcolas/shareddscconfig)
 
 This project is intended to suggest a new structure for sharing DSC Configuration, taking most of the ideas from [Michael Greene](https://github.com/mgreenegit/) in [the dscconfigurations repo](https://github.com/powershell/dscconfigurations).
 
