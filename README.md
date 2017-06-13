@@ -1,6 +1,6 @@
 # Shared Dsc Configurations
 
-This project is intended to suggest a new structure for sharing DSC Configuration, taking most of the ideas from Michael Greene in [the dscconfigurations repo](https://github.com/powershell/dscconfigurations).
+This project is intended to suggest a new structure for sharing DSC Configuration, taking most of the ideas from [Michael Greene](https://github.com/mgreenegit/) in [the dscconfigurations repo](https://github.com/powershell/dscconfigurations).
 
 ## Value Proposition
 
