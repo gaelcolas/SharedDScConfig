@@ -1,4 +1,3 @@
-#Requires -Modules InvokeBuild
 Param (
     [String]
     $BuildOutput = "$PSScriptRoot\BuildOutput",
