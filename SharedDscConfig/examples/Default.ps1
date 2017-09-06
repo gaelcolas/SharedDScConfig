@@ -9,10 +9,21 @@ $here = if(!$PSScriptRoot) { $Pwd.path } else {$PSScriptRoot}
 $ConfigurationData = Import-PowerShellDataFile $here\..\ConfigurationData\Default\Default.psd1
 $Node = $ConfigurationData.AllNodes.Where{$_.Nodename -eq 'localhost'}[0]
 
-. $here\..\SharedDscConfig.ps1
+ipmo -force $here\..\SharedDscConfig.psd1
 
+Configuration Default {
+    Import-DSCresource -ModuleName PSDesiredStateConfiguration
+
+    node $AllNodes.Nodename {
+
+        $MySharedDscConfig = @{
+            #add parameter here if you need
+        }
+        x SharedDscConfig @MySharedDscConfig
+    }
+}
 #using that shareable configuration is now possible
 # Test-Kitchen will call the configuration name to generate the MOF automatically
 if (!$Env:TEST_KITCHEN) {
-    SharedDscConfig -ConfigurationData $ConfigurationData -OutputPath DscBuildOutput\
+    Default -ConfigurationData $ConfigurationData -OutputPath DscBuildOutput\
 }

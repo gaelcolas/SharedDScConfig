@@ -22,6 +22,6 @@ function Resolve-DscConfigurationData {
         Write-Output $Default
     }
 }
-Set-Alias -Name ConfigData -value Resolve-DscConfigurationData
+Set-Alias -Name lookup -value Resolve-DscConfigurationData
 Set-Alias -Name DscProperty -value Resolve-DscConfigurationData
 Set-Alias -Name DscProp -value Resolve-DscConfigurationData
