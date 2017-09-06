@@ -54,24 +54,27 @@ Below are ideas I think worth discussing and suggestions of implementation. Plea
 ```
 C:\SRC\SHAREDDSCCONFIG\SHAREDDSCCONFIG
 │   SharedDscConfig.psd1
-│   SharedDscConfig.schema.psm1
 │
-├───ConfigurationData
-│   └───common
-│           SharedDscConfig.psd1
-│
-├───examples
-│   │   Default.ps1
-│   │   OtherTestSuite.ps1
-│   │
-│   └───scripts
-│           Resolve-DscConfigurationData.ps1
-│
-└───Validation
-    ├───Default
-    │       SharedDscConfig.tests.ps1
+├───DscResources
+│   └───Shared1
+│       │   Shared1.psd1
+│       │   Shared1.schema.psm1
+│       │
+│       ├───ConfigurationData
+│       │   └───common
+│       │           SharedDscConfig.psd1
+│       │
+│       └───Validation
+│           ├───Default
+│           │       SharedDscConfig.tests.ps1
+│           │
+│           └───OtherTestSuite
+└───examples
+    │   Default.ps1
+    │   OtherTestSuite.ps1
     │
-    └───OtherTestSuite
+    └───scripts
+            Resolve-DscConfigurationData.ps1
 ```
 The Shared Configuration should be self contained, but will require files for building/testing or development.
 The repository will hence need some project files on top of the files required for functionality.
