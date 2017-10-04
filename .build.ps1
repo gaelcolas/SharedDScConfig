@@ -1,23 +1,35 @@
+[cmdletBinding()]
 Param (
+    [Parameter(Position=0)]
+    $Tasks,
+
+    [switch]
+    $ResolveDependency,
+
     [String]
-    $BuildOutput = "$PSScriptRoot\BuildOutput",
+    $BuildOutput = "BuildOutput",
 
     [String[]]
-    $GalleryRepository, #used in ResolveDependencies, has default
+    $GalleryRepository,
 
     [Uri]
-    $GalleryProxy, #used in ResolveDependencies, $null if not specified
+    $GalleryProxy,
 
     [Switch]
-    $ForceEnvironmentVariables = [switch]$true
+    $ForceEnvironmentVariables = [switch]$true,
+
+    $MergeList = @('enum*',[PSCustomObject]@{Name='class*';order={(Import-PowerShellDataFile .\SampleModule\Classes\classes.psd1).order.indexOf($_.BaseName)}},'priv*','pub*')
+    
+    ,$CodeCoverageThreshold = 90
 )
 
 Process {
-    Resolve-Dependency
-
-    if ((Get-PSCallStack)[1].InvocationInfo.MyCommand.Name -ne 'Invoke-Build.ps1') {
-        Write-Verbose "Returning control to Invoke-Build"
-        Invoke-Build
+    if ($MyInvocation.ScriptName -notlike '*Invoke-Build.ps1') {
+        if ($PSboundParameters.ContainsKey('ResolveDependency')) {
+            Write-Verbose "Dependency already resolved. Skipping"
+            $null = $PSboundParameters.Remove('ResolveDependency')
+        }
+        Invoke-Build $Tasks $MyInvocation.MyCommand.Path @PSBoundParameters
         return
     }
 
@@ -26,24 +38,20 @@ Process {
             "Importing file $($_.BaseName)" | Write-Verbose
             . $_.FullName 
         }
-    
 
-    task . DscClean, test #,Invoke-DscBuild
+    task . DscClean
 
     task DscClean {
         Get-ChildItem -Path "$PSScriptRoot\DscBuildOutput\" -Recurse | Remove-Item -force -Recurse -Exclude README.md
     }
 
-    task test {}
-
-
-
 }
 
 
 begin {
-    $VerbosePreference = 'Continue'
     function Resolve-Dependency {
+        [CmdletBinding()]
+        param()
 
         if (!(Get-PackageProvider -Name NuGet -ForceBootstrap)) {
             $providerBootstrapParams = @{
@@ -51,6 +59,7 @@ begin {
                 force = $true
                 ForceBootstrap = $true
             }
+            if($PSBoundParameters.ContainsKey('verbose')) { $providerBootstrapParams.add('verbose',$verbose)}
             if ($GalleryProxy) { $providerBootstrapParams.Add('Proxy',$GalleryProxy) }
             $null = Install-PackageProvider @providerBootstrapParams
             Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
@@ -64,7 +73,9 @@ begin {
                 AllowClobber = $true
                 Confirm = $false
                 Force = $true
+                Scope = 'CurrentUser'
             }
+            if($PSBoundParameters.ContainsKey('verbose')) { $InstallPSDependParams.add('verbose',$verbose)}
             if ($GalleryRepository) { $InstallPSDependParams.Add('Repository',$GalleryRepository) }
             if ($GalleryProxy)      { $InstallPSDependParams.Add('Proxy',$GalleryProxy) }
             if ($GalleryCredential) { $InstallPSDependParams.Add('ProxyCredential',$GalleryCredential) }
@@ -75,11 +86,17 @@ begin {
             Force = $true
             Path = "$PSScriptRoot\Dependencies.psd1"
         }
-
-        if ($DependencyTarget) {
-            $PSDependParams.Add('Target',$DependencyTarget)
-        }
+        if($PSBoundParameters.ContainsKey('verbose')) { $PSDependParams.add('verbose',$verbose)}
         Invoke-PSDepend @PSDependParams
         Write-Verbose "Project Bootstrapped, returning to Invoke-Build"
+    }
+
+    if ($ResolveDependency) {
+        Write-Host "Resolving Dependencies... [this can take a moment]"
+        $Params = @{}
+        if ($PSboundParameters.ContainsKey('verbose')) {
+            $Params.Add('verbose',$verbose)
+        }
+        Resolve-Dependency @Params
     }
 }
