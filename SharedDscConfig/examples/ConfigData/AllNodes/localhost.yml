@@ -1,2 +1,5 @@
 Nodename: localhost
 Name: localhost
+Shared1:
+  Param1: Data from Node config Data
+  DestinationPath: C:\testfromconfigdata.txt

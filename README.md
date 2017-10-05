@@ -52,29 +52,50 @@ Below are ideas I think worth discussing and suggestions of implementation. Plea
 ### Repository Structure
 
 ```
-C:\SRC\SHAREDDSCCONFIG\SHAREDDSCCONFIG
-│   SharedDscConfig.psd1
+C:\SRC\SHAREDDSCCONFIG
+│   .build.ps1
+│   .gitignore
+│   .kitchen.yml
+│   appveyor.yml
+│   Dependencies.psd1
+│   LICENSE
+│   README.md
 │
-├───DscResources
-│   └───Shared1
-│       │   Shared1.psd1
-│       │   Shared1.schema.psm1
-│       │
-│       ├───ConfigurationData
-│       │   └───common
-│       │           SharedDscConfig.psd1
-│       │
-│       └───Validation
-│           ├───Default
-│           │       SharedDscConfig.tests.ps1
-│           │
-│           └───OtherTestSuite
-└───examples
-    │   Default.ps1
-    │   OtherTestSuite.ps1
-    │
-    └───scripts
-            Resolve-DscConfigurationData.ps1
+├───.build
+│       README.md
+├───.kitchen
+│   ├───logs
+│   ├───OtherTestSuite-2012r2-WMF5
+│   │   └───OtherTestSuite-2012r2-WMF5
+│   │       ├───Snapshots
+│   │       └───Virtual Machines
+│   └───SharedDscConfig-2012r2-WMF5
+│       └───SharedDscConfig-2012r2-WMF5
+│           ├───Snapshots
+│           └───Virtual Machines
+├───docs
+├───DscBuildOutput
+│   └───modules [pulled according to Dependencies.psd1, not in git]
+│       ├───BuildHelpers
+│       ├───Datum
+│       ├───DscBuildHelpers
+│       ├───InvokeBuild
+│       ├───Pester
+│       ├───platyPS
+│       ├───PSDeploy
+│       └───PSScriptAnalyzer
+└───SharedDscConfig
+    ├───DscResources
+    │   └───Shared1
+    │       ├───ConfigData
+    │       │   └───common
+    │       └───Diagnostics
+    │           ├───Comprehensive
+    │           └───Simple
+    └───examples
+        ├───ConfigData
+        │   └───AllNodes
+        └───DscBuildOutput
 ```
 The Shared Configuration should be self contained, but will require files for building/testing or development.
 The repository will hence need some project files on top of the files required for functionality.
