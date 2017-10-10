@@ -5,6 +5,7 @@
     # Set up a mini virtual environment...
     PSDependOptions = @{
         AddToPath = $True
+        Target = 'DscBuildOutput\modules'
         Parameters = @{
             #Force = $True
             #Import = $True
@@ -12,10 +13,13 @@
     }
 
     invokeBuild = 'latest'
+    'powershell-yaml' = 'latest'
     buildhelpers = 'latest'
     pester = 'latest'
     PSScriptAnalyzer = 'latest'
     PlatyPS = 'latest'
     psdeploy = 'latest'
     'gaelcolas/DscBuildHelpers' = 'master'
+    'gaelcolas/Datum' = 'master'
+    
 }
