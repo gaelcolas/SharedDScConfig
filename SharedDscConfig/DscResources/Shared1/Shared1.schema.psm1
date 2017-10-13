@@ -11,4 +11,8 @@ Configuration Shared1 {
         DestinationPath = $DestinationPath
         Contents        = $Param1
     }
+
+    ChocolateyInstall InstallChoco {
+        Ensure = 'Present'
+    }
 }
