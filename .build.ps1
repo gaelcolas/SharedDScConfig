@@ -39,10 +39,24 @@ Process {
             . $_.FullName 
         }
 
-    task . DscClean
+    task . DscClean,LoadResource,LoadConfigurations
 
     task DscClean {
         Get-ChildItem -Path "$PSScriptRoot\$BuildOutput\" -Recurse | Remove-Item -force -Recurse -Exclude README.md
+    }
+
+    task LoadResource {
+        $PSDependResourceDefinition = '.\PSDepend.resources.psd1'
+        if(Test-Path $PSDependResourceDefinition) {
+            Invoke-PSDepend -Path $PSDependResourceDefinition -Confirm:$False
+        }
+    }
+
+    task LoadConfigurations {
+        $PSDependConfigurationDefinition = '.\PSDepend.configurations.psd1'
+        if(Test-Path $PSDependConfigurationDefinition) {
+            Invoke-PSDepend -Path $PSDependConfigurationDefinition -Confirm:$False
+        }
     }
 
 }
@@ -84,7 +98,7 @@ begin {
 
         $PSDependParams = @{
             Force = $true
-            Path = "$PSScriptRoot\Build.Dependencies.psd1"
+            Path = "$PSScriptRoot\PSDepend.build.psd1"
         }
         if($PSBoundParameters.ContainsKey('verbose')) { $PSDependParams.add('verbose',$verbose)}
         Invoke-PSDepend @PSDependParams
