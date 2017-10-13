@@ -12,7 +12,7 @@ Configuration Shared1 {
         Contents        = $Param1
     }
 
-    ChocolateyInstall InstallChoco {
+    ChocolateySoftware InstallChoco {
         Ensure = 'Present'
     }
 }
