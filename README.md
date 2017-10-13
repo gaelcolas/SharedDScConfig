@@ -75,7 +75,7 @@ C:\SRC\SHAREDDSCCONFIG
 │           └───Virtual Machines
 ├───docs
 ├───DscBuildOutput
-│   └───modules [pulled according to Dependencies.psd1, not in git]
+│   └───modules [pulled according to Dependencies.psd1, modules not in git]
 │       ├───BuildHelpers
 │       ├───Datum
 │       ├───DscBuildHelpers
