@@ -1,6 +1,8 @@
 DscBuildOutput/*
+BuildOutput/*
 modules/*
 .kitchen/*
 Resources/*
+RequiredResources/*
 
 !**/README.md

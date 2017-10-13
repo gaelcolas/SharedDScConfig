@@ -42,7 +42,7 @@ Process {
     task . DscClean
 
     task DscClean {
-        Get-ChildItem -Path "$PSScriptRoot\DscBuildOutput\" -Recurse | Remove-Item -force -Recurse -Exclude README.md
+        Get-ChildItem -Path "$PSScriptRoot\$BuildOutput\" -Recurse | Remove-Item -force -Recurse -Exclude README.md
     }
 
 }

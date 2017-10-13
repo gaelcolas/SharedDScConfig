@@ -5,7 +5,7 @@
     # Set up a mini virtual environment...
     PSDependOptions = @{
         AddToPath = $True
-        Target = 'DscBuildOutput\modules'
+        Target = 'BuildOutput\modules'
         Parameters = @{
             #Force = $True
             #Import = $True
