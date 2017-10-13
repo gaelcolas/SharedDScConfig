@@ -5,6 +5,7 @@ Configuration Shared1 {
     )
     
     Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Import-DscResource -ModuleName Chocolatey
     
     File TestFile {
         Ensure          = 'Present'
