@@ -23,7 +23,7 @@ Using Geoffrey Moore's value proposition model:
 
 ## Intent
 
-<div style="align:right"><img src ="./media/FileTree.png" / align='right'>
+<div style="align:right"><img src ="./docs/media/FileTree.png" / align='right'>
 The intent is to:
 
 - simplify the way to consume a shared configuration
@@ -174,7 +174,7 @@ Resolves to `122`, but another implementation of Resolve-DscConfigurationData co
 Doing so would allow to have functions to lookup for Configuration Data from the Shared Configuration, or from custom overrides.
 
 ### Root Tree
-<div style="align:right"><img src ="./media/rootTree.png" / align='right'>
+<div style="align:right"><img src ="./docs/media/rootTree.png" / align='right'>
 The root of the tree would be similar to a module root tree where you have supporting files for, say, the CI/CD integration.
 
 In this example, I'm illustrating the idea with:
@@ -188,7 +188,7 @@ In this example, I'm illustrating the idea with:
 
 
 ## Configuration Module Folder
-<div style="align:right"><img src ="./media/SharedConfigFolder.png" / align='right'>
+<div style="align:right"><img src ="./docs/media/SharedConfigFolder.png" / align='right'>
 
 Very similar to a PowerShell Module folder, the Shared configuration re-use the same principles and techniques.
 

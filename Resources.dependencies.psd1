@@ -1,0 +1,3 @@
+@{
+    'gaelcolas/Chocolatey' = 'master'
+}

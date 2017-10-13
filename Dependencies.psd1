@@ -21,5 +21,4 @@
     psdeploy = 'latest'
     'gaelcolas/DscBuildHelpers' = 'master'
     'gaelcolas/Datum' = 'master'
-    
 }
