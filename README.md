@@ -52,50 +52,55 @@ Below are ideas I think worth discussing and suggestions of implementation. Plea
 ### Repository Structure
 
 ```
-C:\SRC\SHAREDDSCCONFIG
+SHAREDDSCCONFIG
 │   .build.ps1
 │   .gitignore
 │   .kitchen.yml
 │   appveyor.yml
-│   Dependencies.psd1
 │   LICENSE
+│   PSDepend.build.psd1
+│   PSDepend.resources.psd1
 │   README.md
 │
 ├───.build
 │       README.md
-├───.kitchen
-│   ├───logs
-│   ├───OtherTestSuite-2012r2-WMF5
-│   │   └───OtherTestSuite-2012r2-WMF5
-│   │       ├───Snapshots
-│   │       └───Virtual Machines
-│   └───SharedDscConfig-2012r2-WMF5
-│       └───SharedDscConfig-2012r2-WMF5
-│           ├───Snapshots
-│           └───Virtual Machines
+│
+├───BuildOutput
+│       README.md
+│
 ├───docs
-├───DscBuildOutput
-│   └───modules [pulled according to Dependencies.psd1, modules not in git]
-│       ├───BuildHelpers
-│       ├───Datum
-│       ├───DscBuildHelpers
-│       ├───InvokeBuild
-│       ├───Pester
-│       ├───platyPS
-│       ├───PSDeploy
-│       └───PSScriptAnalyzer
+│   └───media
+│
+├───DSC_Resources
+│       README.md
+│
 └───SharedDscConfig
+    │   SharedDscConfig.psd1
+    │
     ├───DscResources
     │   └───Shared1
+    │       │   Shared1.psd1
+    │       │   Shared1.schema.psm1
+    │       │
     │       ├───ConfigData
+    │       │   │   Datum.yml
+    │       │   │
     │       │   └───common
+    │       │           SharedDscConfig.psd1
+    │       │
     │       └───Diagnostics
     │           ├───Comprehensive
     │           └───Simple
+    │                   SharedDscConfig.tests.ps1
+    │
     └───examples
-        ├───ConfigData
-        │   └───AllNodes
-        └───DscBuildOutput
+        │   Default.ps1
+        │
+        └───ConfigData
+            │   Datum.yml
+            │
+            └───AllNodes
+                    localhost.yml
 ```
 The Shared Configuration should be self contained, but will require files for building/testing or development.
 The repository will hence need some project files on top of the files required for functionality.

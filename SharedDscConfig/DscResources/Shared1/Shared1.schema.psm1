@@ -5,7 +5,6 @@ Configuration Shared1 {
     )
     
     Import-DscResource -ModuleName PSDesiredStateConfiguration
-    Import-DscResource -ModuleName Chocolatey
     
     File TestFile {
         Ensure          = 'Present'
@@ -13,7 +12,4 @@ Configuration Shared1 {
         Contents        = $Param1
     }
 
-    ChocolateySoftware InstallChoco {
-        Ensure = 'Present'
-    }
 }
