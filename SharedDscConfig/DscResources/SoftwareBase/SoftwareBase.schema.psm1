@@ -7,7 +7,7 @@ Configuration SoftwareBase {
     )
     
     Import-DscResource -ModuleName PSDesiredStateConfiguration
-    Import-DscResource -ModuleName Chocolatey -ModuleVersion 0.0.31
+    Import-DscResource -ModuleName Chocolatey -ModuleVersion 0.0.46
     
     ChocolateySoftware ChocoInstall {
         Ensure = 'Present'
