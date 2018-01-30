@@ -45,6 +45,12 @@ Process {
         Get-ChildItem -Path "$PSScriptRoot\$BuildOutput\" -Recurse | Remove-Item -force -Recurse -Exclude README.md
     }
 
+    task Noop { }
+
+    task dsc {
+        . $PSScriptRoot\SharedDscConfig\examples\init.ps1
+    }
+
     task LoadResource {
         $PSDependResourceDefinition = '.\PSDepend.resources.psd1'
         if(Test-Path $PSDependResourceDefinition) {
@@ -63,6 +69,15 @@ Process {
 
 
 begin {
+    
+    if (![io.path]::IsPathRooted($BuildOutput)) {
+        $BuildOutput = Join-Path -Path $PSScriptRoot -ChildPath $BuildOutput
+    }
+
+    if(($Env:PSModulePath -split ';') -notcontains (Join-Path $BuildOutput 'modules') ) {
+        $Env:PSModulePath = (Join-Path $BuildOutput 'modules') + ';' + $Env:PSModulePath
+    }
+    
     function Resolve-Dependency {
         [CmdletBinding()]
         param()

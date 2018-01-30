@@ -4,7 +4,7 @@
     RootModule = 'SoftwareBase.schema.psm1'
     
     # Version number of this module.
-    ModuleVersion = '0.0.1'
+    ModuleVersion = '0.0.2'
     
     # ID used to uniquely identify this module
     GUID = '78db8da3-b47e-4272-a24c-037842ff6164'

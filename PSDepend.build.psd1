@@ -20,5 +20,5 @@
     PlatyPS = 'latest'
     psdeploy = 'latest'
     'gaelcolas/DscBuildHelpers' = 'master'
-    'gaelcolas/Datum' = 'master'
+    Datum = 'latest'
 }

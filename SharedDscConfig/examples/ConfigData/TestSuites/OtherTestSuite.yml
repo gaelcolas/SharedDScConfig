@@ -1,5 +1,9 @@
-Nodename: localhost
-Name: localhost
+Nodename: OtherTestSuite
+
+Configurations:
+  - Shared1
+
+
 Shared1:
   Param1: Data from Node config Data
   DestinationPath: C:\testfromconfigdata.txt

@@ -6,7 +6,7 @@ Configuration Shared1 {
     
     Import-DscResource -ModuleName PSDesiredStateConfiguration
     
-    File TestFile {
+    File "TestFile_$(1..999|Get-Random)" {
         Ensure          = 'Present'
         DestinationPath = $DestinationPath
         Contents        = $Param1

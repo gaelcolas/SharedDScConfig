@@ -1,0 +1,31 @@
+Nodename: SharedDscConfig
+
+Configurations:
+  - Shared1
+  - SoftwareBase
+
+Shared1:
+  Param1: Data from Node config Data
+  DestinationPath: C:\testfromconfigdata.txt
+
+SoftwareBase:
+  Sources:
+    - Name: chocolatey
+      Source: https://chocolatey.org/api/v2
+    - Name: Contoso
+      Ensure: Absent
+      Source: https://contosoweb/nuget/choco
+  
+  Settings:
+    - Name: cacheLocation
+      Value: C:\Windows\TEMP\Chocolatey
+
+  Features:
+    - Name: allowGlobalConfirmation
+    - Name: allowPreviewFeatures
+  
+  Packages:
+    - Name: Chocolatey
+    - Name: chocolatey.extension
+      Version: '1.12.2'
+    - Name: Putty

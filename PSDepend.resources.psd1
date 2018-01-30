@@ -8,5 +8,5 @@
         }
     }
 
-    'gaelcolas/Chocolatey' = 'master'
+    Chocolatey = '0.0.46'
 }

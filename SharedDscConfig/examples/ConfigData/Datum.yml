@@ -1,8 +1,2 @@
-DatumStructure:
-  - StoreName: AllNodes
-    StoreProvider: Datum::File
-    StoreOptions:
-      DataDir: "./ConfigData/AllNodes"
-
 ResolutionPrecedence:
-  - 'AllNodes\$($Node.Name)'
+  - 'TestSuites\$($Node.Name)'

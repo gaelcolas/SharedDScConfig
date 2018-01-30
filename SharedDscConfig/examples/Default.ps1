@@ -1,28 +1,27 @@
-$here = if(!$PSScriptRoot) { "$($Pwd.path)\SharedDscConfig\examples\" } else {$PSScriptRoot}
+# if(!$PSScriptRoot) {$here = "$($Pwd.path)\SharedDscConfig\examples\" } else {$here = $PSScriptRoot}
+# . .\SharedDscConfig\examples\init.ps1
 
-$ProjectPath = Get-item "$here\..\.."
+Import-Module -force Datum -Global -errorAction Stop
 
-if($Env:PSModulePath -split ';' -notcontains $ProjectPath) {
-    Write-Warning ">>> $ProjectPath"
-    $Env:PSModulePath = $Env:PSModulePath +';'+ $ProjectPath.FullName
-}
-# load the Configuration Property resolver
+$DatumConfig = Join-Path  $PSScriptRoot "ConfigData\Datum.yml"
+Write-Warning "Loading $DatumConfig"
 
-Import-Module -force Datum -Global
-#. $here\scripts\Resolve-DscConfigurationData.ps1
-$yml = Get-Content -raw $Here\ConfigData\Datum.yml | ConvertFrom-Yaml
+$Global:Datum = New-DatumStructure -definitionFile $DatumConfig
 
-Push-Location $Here
-$Global:Datum = New-DatumStructure $yml
+$AllNodes = @($Datum.TestSuites.psobject.Properties | ForEach-Object { 
+    $Node = $Datum.TestSuites.($_.Name)
+    if(!$Node.contains('Name') ) {
+        $null = $Node.Add('Name',$_.Name)
+    }
+    (@{} + $Node) #Remove order & Case Sensitivity
+})
+
 $Global:ConfigurationData = @{
-    AllNodes = @($Datum.AllNodes.psobject.properties|%{ $Datum.AllNodes.($_.Name)})
+    AllNodes = $AllNodes
     Datum = $Global:Datum
 }
-#Load configuration Data
-#$ConfigurationData = Import-PowerShellDataFile $here\..\ConfigurationData\Default\Default.psd1
-#$Node = $ConfigurationData.AllNodes.Where{$_.Nodename -eq 'localhost'}[0]
 
-ipmo -force $here\..\SharedDscConfig.psd1
+#ipmo -force $here\..\SharedDscConfig.psd1
 
 
 Configuration Default {
@@ -30,24 +29,28 @@ Configuration Default {
     
     Node $ConfigurationData.AllNodes.NodeName {
 
-        Shared1 SharedConfig_NoParam {
-            # When no param specified, the default params will be used
+        # When no param specified, the default params will be used
+        Shared1 SharedConfig_NoParam {}
+
+        #Specifying a parameter the traditional way
+        Shared1 SharedConfig_Param1 {
+            Param1 = 'This is the content from the Root configuration. Traditional approach'
+            DestinationPath = 'C:\Test_2.txt' #Using the same file as previous block would fail (2 Resource with same key for same Node)
         }
 
-        Shared1 SharedConfig_Param1 {
-            Param1 = 'This is the content from the Root configuration'
-            DestinationPath = 'C:\Test2.txt' #Using the same file as previous block would fail (2 Resource with same key for same Node)
-        }
-        Write-Warning ($Node|out-String)
-        Write-Warning (Lookup $Node 'Shared1'|out-String)
+        #Write-Warning ($Node|out-String)
+        $(Write-Warning "Shared1 Parameters: $(Lookup 'Shared1'|Convertto-Json)")
         
         #Auto lookup Parameters for $node with Configuration
-        $Properties = $(Lookup $Node 'Shared1' -DefaultValue @{})
-        Get-DscSplattedResource -ResourceName 'Shared1' -ExecutionName 'Shared1' -Properties $Properties
-        
-        #or in short notation
-        #x 'Shared1' 'Shared1' $Properties
+        $Properties = $(Lookup 'Shared1')
+        (Get-DscSplattedResource -ResourceName 'Shared1' -ExecutionName 'Shared1_FromNodeBlock' -Properties $Properties -NoInvoke).Invoke($Properties)
 
+        #Auto lookup configurations for that node, and foreach of them, look for its params and splat them
+        (Lookup Configurations).Foreach{
+            $ConfigName = $_
+            $Properties = Lookup $ConfigName -DefaultValue @{}
+            (x $ConfigName $ConfigName $Properties -NoInvoke).Invoke($Properties)
+        }
     }
 }
 
