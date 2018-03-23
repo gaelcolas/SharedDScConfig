@@ -17,7 +17,7 @@ Using Geoffrey Moore's value proposition model:
 >
 >Our __configuration sharing guidelines__ is __a re-usable build process for DSC configurations__
 >
->That __transforms Configuration into re-usable and composable DSC Composite Resources__
+>That ~~transforms Configuration into re-usable and composable DSC Composite Resources~~ allow configurations to be composed, following the [Datum](https://github.com/gaelcolas/Datum) model.
 
 
 
@@ -53,54 +53,49 @@ Below are ideas I think worth discussing and suggestions of implementation. Plea
 
 ```
 SHAREDDSCCONFIG
+C:\SRC\SHAREDDSCCONFIG
 │   .build.ps1
-│   .gitignore
-│   .kitchen.yml
-│   appveyor.yml
-│   LICENSE
 │   PSDepend.build.psd1
 │   PSDepend.resources.psd1
-│   README.md
 │
 ├───.build
-│       README.md
-│
 ├───BuildOutput
-│       README.md
-│
 ├───docs
-│   └───media
-│
 ├───DSC_Resources
-│       README.md
 │
 └───SharedDscConfig
     │   SharedDscConfig.psd1
     │
     ├───DscResources
-    │   └───Shared1
-    │       │   Shared1.psd1
-    │       │   Shared1.schema.psm1
-    │       │
-    │       ├───ConfigData
-    │       │   │   Datum.yml
-    │       │   │
-    │       │   └───common
-    │       │           SharedDscConfig.psd1
-    │       │
-    │       └───Diagnostics
-    │           ├───Comprehensive
-    │           └───Simple
-    │                   SharedDscConfig.tests.ps1
+    │   ├───Shared1
+    │   │   │   Shared1.psd1
+    │   │   │   Shared1.schema.psm1
+    │   │   │
+    │   │   ├───ConfigData
+    │   │   │   │   Datum.yml
+    │   │   │   │
+    │   │   │   └───default
+    │   │   │           SharedDscConfig.psd1
+    │   │   │
+    │   │   └───Diagnostics
+    │   │       ├───Comprehensive
+    │   │       └───Simple
+    │   │               SharedDscConfig.tests.ps1
+    │   │
+    │   └───SoftwareBase
+    │           SoftwareBase.psd1
+    │           SoftwareBase.schema.psm1
     │
     └───examples
         │   Default.ps1
+        │   init.ps1
         │
         └───ConfigData
             │   Datum.yml
             │
-            └───AllNodes
-                    localhost.yml
+            └───TestSuites
+                    OtherTestSuite.yml
+                    SharedDscConfig.yml
 ```
 The Shared Configuration should be self contained, but will require files for building/testing or development.
 The repository will hence need some project files on top of the files required for functionality.

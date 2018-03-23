@@ -9,7 +9,7 @@ Configuration SoftwareBase {
     )
     
     Import-DscResource -ModuleName PSDesiredStateConfiguration
-    Import-DscResource -ModuleName Chocolatey -ModuleVersion 0.0.46
+    Import-DscResource -ModuleName Chocolatey -ModuleVersion 0.0.48
     
     # Install Choco Software if not present
     ChocolateySoftware ChocoInstall {
