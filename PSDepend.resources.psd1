@@ -8,5 +8,5 @@
         }
     }
 
-    Chocolatey = '0.0.46'
+    Chocolatey = '0.0.58'
 }
