@@ -19,6 +19,6 @@
     PSScriptAnalyzer = 'latest'
     PlatyPS = 'latest'
     psdeploy = 'latest'
-    'gaelcolas/DscBuildHelpers' = 'master'
+    DscBuildHelpers = 'latest'
     Datum = 'latest'
 }

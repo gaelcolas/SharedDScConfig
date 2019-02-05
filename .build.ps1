@@ -19,7 +19,7 @@ Param (
     $ForceEnvironmentVariables = [switch]$true,
 
     $MergeList = @('enum*',[PSCustomObject]@{Name='class*';order={(Import-PowerShellDataFile .\SampleModule\Classes\classes.psd1).order.indexOf($_.BaseName)}},'priv*','pub*')
-    
+
     ,$CodeCoverageThreshold = 90
 )
 
@@ -36,13 +36,16 @@ Process {
     Get-ChildItem -Path "$PSScriptRoot/.build/" -Recurse -Include *.ps1 -Verbose |
         Foreach-Object {
             "Importing file $($_.BaseName)" | Write-Verbose
-            . $_.FullName 
+            . $_.FullName
         }
 
     task . DscClean,LoadResource,LoadConfigurations
 
     task DscClean {
-        Get-ChildItem -Path "$PSScriptRoot\$BuildOutput\" -Recurse | Remove-Item -force -Recurse -Exclude README.md
+        if(![io.path]::IsPathRooted($BuildOutput)) {
+            $BuildOutput = Join-Path $PSScriptRoot $BuildOutput
+        }
+        Get-ChildItem -Path $BuildOutput -Recurse | Remove-Item -force -Recurse -Exclude README.md
     }
 
     task Noop { }
@@ -69,7 +72,7 @@ Process {
 
 
 begin {
-    
+
     if (![io.path]::IsPathRooted($BuildOutput)) {
         $BuildOutput = Join-Path -Path $PSScriptRoot -ChildPath $BuildOutput
     }
@@ -77,7 +80,7 @@ begin {
     if(($Env:PSModulePath -split ';') -notcontains (Join-Path $BuildOutput 'modules') ) {
         $Env:PSModulePath = (Join-Path $BuildOutput 'modules') + ';' + $Env:PSModulePath
     }
-    
+
     function Resolve-Dependency {
         [CmdletBinding()]
         param()
